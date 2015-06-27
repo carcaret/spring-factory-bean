@@ -1,24 +1,29 @@
 package com.spring.bean;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class FactoryBean {
+public abstract class FactoryBean {
 
 	@Autowired
-	private ConfigBean configBean;
+	protected ConfigBean configBean;
 	
-	private String param;
-
-	private FactoryBean(String param) {
-		this.param = param;
+	private String property;
+	
+	@PostConstruct
+	public void init(){
+		this.property = configBean.expandParam("property");
 	}
 
-	public static FactoryBean createInstance(String param) {
-		return new FactoryBean(param);
+	public abstract String getProperty();
+	
+	public static FactoryBean GET(int id) {
+		return new FactoryBeanGet(id);
 	}
-
-	public String echoParam() {
-		return configBean.expandParam(param);
+	
+	public static FactoryBean POST(String param){
+		return new FactoryBeanPost(param);
 	}
 
 }

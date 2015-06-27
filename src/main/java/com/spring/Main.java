@@ -11,9 +11,11 @@ public class Main {
 		ApplicationContext context = 
 		    	   new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml"});
 		
-		FactoryBean bean = (FactoryBean) context.getBean("factoryBean", "test param");
-		System.out.println(bean.echoParam());
+		FactoryBean bean = (FactoryBean) context.getBean("factoryBeanGet", 12);
+		System.out.println(bean.getProperty());
 		
+		bean = (FactoryBean) context.getBean("factoryBeanPost", "test param");
+		System.out.println(bean.getProperty());
 	}
 	
 }
